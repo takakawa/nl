@@ -14,17 +14,10 @@ void processPacket(u_char *arg, const struct pcap_pkthdr *pkthdr, u_char *packet
 	struct ip *iphdr = NULL;
 	struct tcphdr  *tcphdr = NULL;
 
-	printf("Packet Count:%d\n",++(*counter));
-	printf("Received Packet Size: %d\n",pkthdr->len);
-
-
 	iphdr   = (struct ip *)(packet + 14);
 
-
 	tcphdr  = (struct tcphdr *)(packet + 14  + (iphdr->ip_hl<<2));
-	fprintf(stdout, "AcSeq[%u] Flags[%x] Seq[%u] SP[%u] DP[%u] \n",ntohl(tcphdr->th_ack),tcphdr->th_flags,ntohl(tcphdr->th_seq),ntohs(tcphdr->th_sport),ntohs(tcphdr->th_dport));
-	printf("DST IP:%4x\n",iphdr->ip_dst);
-	fprintf(stdout, "SRC IP:%4x\n",iphdr->ip_src);
+	fprintf(stdout, "[%u.%u] Len[%d] AcSeq[%u] Flags[%x] Seq[%u] %x:%u -> %x:%u \n",pkthdr->ts.tv_sec,pkthdr->ts.tv_usec,pkthdr->len,ntohl(tcphdr->th_ack),tcphdr->th_flags,ntohl(tcphdr->th_seq),iphdr->ip_src,ntohs(tcphdr->th_sport),iphdr->ip_dst,ntohs(tcphdr->th_dport));
 	return ;
 }
 
