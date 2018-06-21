@@ -23,8 +23,8 @@ void processPacket(u_char *arg, const struct pcap_pkthdr *pkthdr, u_char *packet
 
 	tcphdr  = (struct tcphdr *)(packet + 14  + (iphdr->ip_hl<<2));
 	fprintf(stdout, "AcSeq[%u] Flags[%x] Seq[%u] SP[%u] DP[%u] \n",ntohl(tcphdr->th_ack),tcphdr->th_flags,ntohl(tcphdr->th_seq),ntohs(tcphdr->th_sport),ntohs(tcphdr->th_dport));
-	fprintf(stdout, "DST IP:%s\n",inet_ntoa(iphdr->ip_dst));
-	fprintf(stdout, "SRC IP:%s\n",inet_ntoa(iphdr->ip_src));
+	printf("DST IP:%4x\n",iphdr->ip_dst);
+	fprintf(stdout, "SRC IP:%4x\n",iphdr->ip_src);
 	return ;
 }
 
